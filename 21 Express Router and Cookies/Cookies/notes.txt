@@ -1,0 +1,32 @@
+They are tiny bits of information we store in a user's browsers. Used in Session management, authentication. They act as flags to identify a particular user.
+
+Dev tools > Application > Storage > Cookies
+
+name: value pairs
+
+After sending a cookie, on every route of localhost, we have access to this cookie. We can send domain, encode, expiry date, path etc
+
+We use cookies to add statefulness to our requests.
+
+                                        SIGNED COOKIES
+What are signed cookies? Signing something refers to a cryptographic signature.
+Signing a cookie means to send it with a secret code. On the client side, the cookie looks normal.
+But on the server-side, cookie parser can tell if the cookie has been modified/tampered.
+
+We aren't hiding the data (we can see the data inside the string), we are just tagging it. We can find these cookies under req.signedCookies.
+The reason they aren't available in req.cookies is to make it clear that they are signed cookies.
+
+If we manually update the signed cookie fruit, it's not in req.signedCookies because cookie-parser isn't verifying it anymore.
+
+If it still recognizes the cookie format, but the value has been changed, the value of the name is set to false.
+
+                                        HMAC SIGNING (not related to Express.js)
+HMAC -> hash-based message authentication code.
+Signing is use in crypo currency as well (bitcoin, ethereum)
+
+https://github.com/tj/node-cookie-signature/blob/master/index.js
+https://www.freeformatter.com/hmac-generator.html -> hmac testing tool
+
+.sign() -> signs the cookies
+.unsign() -> we feed it the supposedly tampered cookie value. It extracts the value from it, signs it again, and compares the 2 values. 
+If the 2 strings aren't equal, the cookie has been modified, otherwise not.

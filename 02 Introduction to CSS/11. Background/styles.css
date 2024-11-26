@@ -1,0 +1,13 @@
+div {
+  width: 85vw;
+  height: 85vh;
+  /* background-color: aqua; */
+  border: 1px solid black;
+  background-image: url("https://images.unsplash.com/photo-1690055898834-553d613aed7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80");
+  background-size: 150px 500px;
+  background-repeat: repeat-y;
+}
+
+h1 {
+    color: white;
+}

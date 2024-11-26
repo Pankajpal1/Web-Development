@@ -1,0 +1,102 @@
+MongoDB is used with Node
+
+We are only covering CRUD, which is enough for MERN stack.
+
+Why use a database instead of just saving to a file?
+- Data persistence
+- They can handle large amounts of data
+- They provide tools for easy CRUD
+- Security features and control access to data
+- They scale well
+
+MySQL vs SQL
+
+SQL------------------
+eg, mysql, postgresql, oracle
+Relational databases, they consist of a pre-defined table/schema.
+
+NoSQL----------------
+eg, MongoDB, Cassandra, CouchDB
+Newer, very diverse group, not much can be generalised about them.
+
+Document Oriented Database (NoSQL db)-> They store information in JSON, XML, YAML etc
+You don't have to follow some pre-defined schema, you can just take the information and store it.
+
+                        BUT WHY MONGO??
+
+Commonly used with Node and Express (MERN and MEAN)
+It's easy to get started with (though it's difficult to truly master)
+It plays really well with JavaScript
+Strong community of developers.
+
+                        MONGO SYNTAX
+
+> The Mongo Shell is a REPL
+> You need to have mongod running in the background
+> It mostly uses JavaScript syntax
+
+show dbs -> lists databases
+use db_name -> creates database and switches to it.
+
+Mongo stores data in BSON format. It's similar to JSON. JSON is very slow, because it's text-based, and it's not space-efficient.
+Also, json doesn't support a lot of data types, only basic.
+BSON -> BinaryJSON, it's a compact form. It can store data types like, string boolean, number -> array, dates, raw binary etc
+
+INSERTING DATA
+> You insert into a collection (a grouping of data.) Instead of our data floating around in the database.
+    show collections;
+> If collection doesn't exist, mongo creates one and inserts data. 
+insertOne, insertMany or insert
+
+db.collection.insert() -> pass a js object, or an array of objects
+db.collection.find() -> lists all the data in a collection
+
+> Our object will have an _id field, automatically created by Mongo, it's a primary key (unique), you can make your own as well.
+> For a collection, you don't have to follow a specific format by default. You CAN set a schema though.
+
+FINDING DATA
+> db.collection.find() -> pass in an object (aka a query)
+    { breed: "corgi" }, case-sensitive obviously
+    It returns a 'cursor', kind of a pointer to the result, because there can be thousands of results,
+    using this pointer, we can iterate over them
+
+    db.collection.findOne() -> returns only one
+    returns an object
+
+UPDATING DATA
+> finding what to update + updating it
+updateOne, updateMany
+
+db.collection.updateMany({name: 'idk'}, {$set: {<category>: new_value}})
+> If you try to update a category that doesn't exist, it will add that key: value pair
+There are a lot of operators.
+$currentDate -> sets a value to the current date.
+
+    $currentDate: {lastModified: true}
+
+replaceOne -> completely changes everything about a value, while keeping the _id same.
+
+DELETING DATA
+db.collection.deleteOne({}) -> pass some criteria
+
+db.collection.deleteMany({}) -> clears the collection if you don't pass anything.
+
+*** ADDITIONAL MONGO OPERATORS
+
+> If we have a property which is an object as well, to access the nested property, use
+db.dogs.find({"personality.childFriendly": true})
+
+> There are a lot of operators, read the docs
+
+1. qty: {$gt: 20} -> qty greater than 20
+            $gte -> greater than or equal to
+            $lt -> less than
+            $in -> {value1, value2, value3} -> where value is a part of an array
+            $nin -> not in
+            $ne -> not equal to
+            $and, $not, $or
+
+            db.inventory.find({$or: [ { quantity: {$lt: 20}}, {price: 10}]})
+                            where quantity is less than 20 or price is 10
+
+    db.dogs.find({ $or: [{ 'personality.catFriendly': true}, { age: {$lte: 2}}]})

@@ -1,0 +1,68 @@
+To add complicated validations, set property to an object, and we can add built-in validations
+eg, required
+
+If you find a field which isn't in the schema, it will just ignore that field and add the fields that 
+are in the schema
+
+> There are options for your schema. required, default, immutable.
+> Things you can apply to strings -> lowercase, uppercase, trim, minLength, maxLength, enum
+ match = set patterns for your strings
+> Number -> min, max, enum
+> Date -> min, max
+
+Maybe we want our products to have an array of categories ["Outdoors" , "Cycling"]
+
+BUT OUR SCHEMA WON'T VALIDATE UPDATES, we need to explicitly tell mongoose to validate it, {runValidators: true}
+
+                    MONGOOSE VALIDATION ERRORS
+We can make custom validation errors when we are using built-in validators.
+min: [0, "Price must be positive"]
+
+* Enum -> allows us to provide an array to make sure the value we enter is in a set of acceptable values
+
+                    ADDING CUSTOM METHODS TO SCHEMA
+Instance methods: Method that is available on every single instance of the model
+Class methods: all methods that start with Product. ...
+
+const p = new product({name: "Bike Bag", price: 12}) 
+p.greet() // HELLO!!!
+
+We have access to greet in every instance of product.
+
+Instance methods are methods that are executed on individual model instances. They have access to the instance's data
+and can perform operations specific to that instance.
+
+
+                        STATIC METHODS
+Static methods are attached to the model itself and can be called directly on the model without creating an instance.
+"This" here, refers to the class itself, not individual instances.
+
+eg, productSchema.statics.method = function () {}
+
+We make this to do fancy updates, removal. Adding to the CLASS.
+
+eg, let animals = await Animal.findByName("fido");  our own function. 
+    let dogs = Animal.findByBreed("Chihuahua");
+
+
+                            VIRTUALS
+Add properties in schema that actually don't exist in database.
+
+person.js
+We could just write an instance method, getFullName() but here, it will behave like an
+actual property, even though it isn't (virtual)
+This property doesn't exist in the database, only on the javascript side of things.
+Used for things which we access quite frequently and don't want to take up extra space in the database.
+
+setter-----
+person.fullName = "ABC", this won't change it
+
+
+
+                        MONGOOSE MIDDLEWARE
+We can run code before/after certain mongoose commands. 
+pre and post middleware.
+
+You can do a lot of stuff with middleware.
+Let's say you have a review model. Whenever you post a review, you want to update the average.
+So we can simply set up some middleware to do that.

@@ -1,0 +1,50 @@
+                            REST
+
+REpresentational State Transfer
+> It's a set of guidelines/principles how clients and servers should interact.
+> Soon we will create APIs and routes which will be RESTful
+> Create content, Read content, Update content, Delete content 
+    CRUD
+
+> Uniform interface i.e. a consistent URL pattern matched with different HTTP methods to enable CRUD operations.
+
+username - text
+
+GET /comments -> shows comments
+POST /comments -> new comment
+PATCH /comments/{ id } -> update existing comment
+DELETE /comments/{ id } -> delete a comment
+
+This pattern is not "REST", it's RESTful
+
+Create ✅
+
+> There is a big problem with our /comments/new route. If you refresh the page to send a get request to /comments,
+    we will get a 'confirm form resubmission' error, which will result in pushing the comment to the array multiple times.
+> So, we need to automatically send a get request i.e., redirect the user to /comments. To do that, we use res.redirect() status code - 302.
+    When the browswer intercepts a 302 status code, it sends a second GET request to the specified location.
+
+Read ✅
+
+/comments/:id
+> We need to create distinct ids, otherwise there can be ID conflicts
+
+Update ✅
+
+PATCH /comments/:id
+PUT and PATCH are similar, but PUT completely changes the content, PATCH can also just slightly modify the content.
+
+but res.patch() doesn't exist directly
+PATCH requests can have payloads (it can have a req.body)
+> There is a problem. We are looking to update our comments using a form. But, the thing is, HTML forms can
+ only send get or post requests, not patch,put etc. How to fake it?
+There's a package called method-override. We can use HTTP verbs where the client doesn't support them.
+
+1. send a http header, specifying the type of request
+2. (best) 
+    Use a query string value app.use(methodOverride('_method'))
+    method='post' action = '/resource?_method="PATCH"'
+    Even though it's a post request, express will treat it as a PATCH request
+
+Delete ✅
+> We need to use methodOverride again

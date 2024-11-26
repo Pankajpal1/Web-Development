@@ -1,0 +1,55 @@
+> We need to execute express by calling the function express() and save the return value in a variable called app.
+> app.listen(port, callback) -> listens for http requests and needs a port to listen to http requests. put 3000 for now or 8080
+                -> accepts a callback function and runs just when the server has started running.
+
+> Where do we send the request to/ What URL do I send a request to?
+    https://localhost:portnumber
+    It's running locally on our machine only.
+
+                                REQUESTS AND RESPONSES
+
+> To respond with content -> request and response are objects made by express and they are automatically passed in the callback 
+
+    app.use((req, res) => {
+        
+    })
+
+> An HTTP request is not a JS object, it's text information. Express parses it and turns it into an object.
+> console.dir(req) gives a massive object, with headers, URL, protocols, pathname etc.
+> The response object has methods, including response.send();
+
+    eg, res.send("This is a response!");
+    eg, res.send("<h1>This is a response</h1>");
+
+    We can respond with text/a js object (turns it into JSON)
+
+> You can send a status code with your response, res.status(404).send('this page does not exist XP');
+
+                                    ROUTING
+> app.get('/cats', (req, res) => {})            runs when a request matching /cats comes in
+
+> This will only match 'get' requests.
+
+app.post() -> post requests 
+
+> If we want to have a generic response, use app.get("*") (matches everything). Put this at the bottom of your routes as a hail mary
+
+                                GENERIC PATTERN
+
+> For now, we only have direct match routes i.e. they run when our request exactly matches "cats".
+> For example, Reddit has hundreds of thousands of subreddits, does it have an app.get() for each subreddit?
+        NO 
+
+They use a pattern, reddit.com/r/something -> 'something' would be a variable 
+> In express we use : to denote that it's a variable app.get('reddit.com/r/:subreddit')
+> To use the subreddit variable, we can find it in the req.params object.
+> If we chain requests, r/subreddit/postId this is completely different.
+                        r/:subreddit/:postId -> postId is inside the same object. 
+
+> This may seem useless now, but we can use this with databases to construct a web page and send it back!
+
+                                        QUERY STRINGS 
+                                        
+> /search?q=coding 
+> Here, q is a query string.
+> The query in an incoming HTTP request is found in req.query object

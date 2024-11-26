@@ -1,0 +1,34 @@
+                        ASYNC ERRORS!
+
+What if we get errors in Mongoose errors? What if we leave our newProduct form blank? That will crash the app.
+
+All model methods take time and are async. If we look for a product that doesn't exist, Mongoose won't throw an error, it will simply return null.
+
+If there's no product, we pass an AppError inside next() in our async functions.
+
+What if errors from mongoose? We leave form blank, price < 0 etc.
+
+For now, handle them with try-catch. We can put try-catch in pretty much every async function.
+
+**********************************
+
+It does get annoying to wrap everything in try-catch, as we will have a lot of async errors. 
+
+So we are wrapping our function inside a wrapper function.
+
+⚠️⚠️⚠️
+Basically, you are passing your async function to this outer wrapper function (async wrap), which will return
+an inner-wrapper function. This function will be executed when we hit that route. While executing, you will hit
+an async function (your original function), isme hamne .catch() laga diya because it returns a promise. That way,
+you won't have to write a ton of try-catch blocks. Because, if successful, it will execute, if not, it will go to 
+catch block by itself.
+
+
+THE PURPOSE OF THIS IS TO JUST CLEAN UP YOUR CODE
+
+
+                                MONGOOSE ERRORS
+Mongoose can give a combination of errors, maybe id is too long AND doesn't exist.
+
+We aren't learning how to handle these errors, we are just seeing how we could do some stuff if it was a 
+ValidationError, CastError etc.

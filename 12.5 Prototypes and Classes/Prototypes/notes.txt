@@ -1,0 +1,7 @@
+                                    PROTOTYPES
+Everything in javascript is an object!
+
+In each array/object we create, we get some additional properties and member functions. What are these?
+These are prototype functions inherited from the parent Object object
+
+What if we want name property from obj in obj2?

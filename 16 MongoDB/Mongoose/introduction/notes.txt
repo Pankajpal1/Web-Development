@@ -1,0 +1,28 @@
+            WHAT IS MONGOOSE??
+We have an application that interacts with our database and our Node app.
+
+Object Data Mapper (ODM) -> makes data coming from Mongo into useful JS objects.
+
+
+Using Mongoose
+    npm i mongoose
+1. require it
+2. run mongoose.connect("mongodb://127.0.0.1:27017/dbName")
+
+    But if you run your file, the terminal will kind of hang. It's not an error, it's expecting us to write some commands in the script.js
+3. .connect() returns a promise, so use then-catch
+
+
+                                    MODELS
+1. Models are JS classes that represent data in a collection in our db
+2. A model is derived from a schema. We make a model because a schema on its own is not related to mongodb, it's just JavaScript. 
+    A model is what tells our db what the incoming data will be like.
+
+A schema is just a blueprint, it does nothing. A model is a JavaScript class that represents a collection inside our DB.
+
+Movie.insertMany() -> async function, returns a promise, with this we don't have to do .save()
+
+UPDATING 
+It doesn't return what was updated, it just returns how many were updated.
+
+Most database operations are asynchronous, use your brain.

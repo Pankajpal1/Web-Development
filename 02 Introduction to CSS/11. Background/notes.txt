@@ -1,0 +1,16 @@
+background-image: url() or gradient
+
+background-size: cover -> if image is smaller than container, it will zoom into the image so that the container
+                            gets covered, but some parts may get cropped out.
+
+                contain -> fits the entire image in the container (useful if image is very big)
+                auto -> keeps the original size of image and not scaled at all
+
+                In all 3, aspect ratio is maintained
+
+                but if we give 200px 150px, they will set width and height
+                    same w/ percentages
+
+background-repeat: repeat -> repeats image horizontally and vertically to fill the element
+                    repeat-x, repeat-y -> only in specified direction
+                    no-repeat -> don't repeat the image, baaki area khali rehne do
